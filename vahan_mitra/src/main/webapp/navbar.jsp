@@ -9,7 +9,7 @@
   }
 
   .navbar {
-    background: linear-gradient(90deg, #2c3e50 0%, #34495e 100%);
+    background: #566573;
     padding: 0.8em 2em;
     display: flex;
     justify-content: space-between;
@@ -23,6 +23,10 @@
     font-size: 1.5em;
     text-decoration: none;
     letter-spacing: 1px;
+  }
+
+  .navbar-brand:hover {
+    color: #fff;
   }
 
   .nav {
@@ -54,31 +58,48 @@
   .nav-link:active {
     transform: scale(0.98);
   }
+
+  .disabled-link {
+    color: #bdc3c7 !important;
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.7;
+  }
 </style>
 
 <nav class="navbar">
-  <div class="navbar-brand">VahanMitra</div>
+  <a href="index.jsp" class="navbar-brand">VahanMitra</a>
   <ul class="nav">
-    <li class="nav-item">
-      <a class="nav-link" href="vehicleList.jsp">Browse Vehicles</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="recommendations.jsp">Recommendations</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="myReviews.jsp">My Reviews</a>
-    </li>
-
-    <% if (session.getAttribute("username") == null) { %>
+    <% if (session.getAttribute("username") != null) { %>
+      <!-- Show these links only to logged-in users -->
       <li class="nav-item">
-        <a class="nav-link" href="login.jsp">Login</a>
+        <a class="nav-link" href="vehicleList.jsp">Browse Vehicles</a>
       </li>
-    <% } else { %>
+      <li class="nav-item">
+        <a class="nav-link" href="recommendations.jsp">Recommendations</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="myReviews.jsp">My Reviews</a>
+      </li>
       <li class="nav-item">
         <a class="nav-link" href="profile.jsp">Profile</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="logout">Logout</a>
+      </li>
+    <% } else { %>
+      <!-- Show these links to guests -->
+      <li class="nav-item">
+        <a class="nav-link disabled-link" title="Please login to access">Browse Vehicles</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled-link" title="Please login to access">Recommendations</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled-link" title="Please login to access">My Reviews</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="login.jsp">Login</a>
       </li>
     <% } %>
   </ul>
