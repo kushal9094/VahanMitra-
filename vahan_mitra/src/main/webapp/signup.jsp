@@ -22,7 +22,7 @@
                style="width: 100%; padding: 10px; margin: 8px 0; background: #f5f5f5; border: none; font-size: 14px;">
         
         <input type="submit" value="Sign Up" 
-               style="background: #62260dab; color: white; padding: 10px; border: none; cursor: pointer; font-weight: 500; width: 100px;">
+               style="background: #566573; color: white; padding: 10px; border: none; cursor: pointer; font-weight: 500; width: 100px;">
 
         <!-- Success and Error Messages -->
         <%
@@ -43,7 +43,7 @@
         <!-- Link to Login -->
         <p style="margin-top: 20px; font-size: 12px; text-align: center;">
           Already have an account? 
-          <a href="login.jsp" style="color: #62260d; font-weight: 600; text-decoration: none;">Sign In.</a>
+          <a href="login.jsp" style="color: #2c3e50; font-weight: 600; text-decoration: none;">Sign In.</a>
         </p>
       </form>
     </div>
