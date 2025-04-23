@@ -1,44 +1,49 @@
 package com.automobile.dao;
 
-import java.sql.*;
+import com.automobile.model.User;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 public class UserDAO {
-    private static final String URL = "jdbc:postgresql://localhost:5432/automobile_ratings";
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "dvgs";
+    private static final SessionFactory sessionFactory = new Configuration()
+            .configure("hibernate.cfg.xml")
+            .addAnnotatedClass(User.class)
+            .buildSessionFactory();
 
     public static boolean checkUser(String usernameOrEmail, String password) {
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            String query = "SELECT password FROM users WHERE username = ? OR email = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setString(1, usernameOrEmail);
-                stmt.setString(2, usernameOrEmail);
-                ResultSet rs = stmt.executeQuery();
-                if (rs.next()) {
-                    String dbPassword = rs.getString("password");
-                    return password.equals(dbPassword); // Plain-text comparison
-                }
-            }
-        } catch (SQLException e) {
+        try (Session session = sessionFactory.openSession()) {
+            String hql = "FROM User WHERE username = :identifier OR email = :identifier";
+            Query<User> query = session.createQuery(hql, User.class);
+            query.setParameter("identifier", usernameOrEmail);
+            User user = query.uniqueResult();
+            return user != null && user.getPassword().equals(password);
+        } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     public static String registerUser(String username, String password, String email) {
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            String query = "INSERT INTO users (username, password, email) VALUES (?, ?, ?)";
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setString(1, username);
-                stmt.setString(2, password); // Store plain-text password
-                stmt.setString(3, email);
-                stmt.executeUpdate();
-                return "SUCCESS";
-            }
-        } catch (SQLException e) {
-            if ("23505".equals(e.getSQLState())) {
+        try (Session session = sessionFactory.openSession()) {
+            // Check if user exists
+            if (session.createQuery("FROM User WHERE username = :un OR email = :em", User.class)
+                    .setParameter("un", username)
+                    .setParameter("em", email)
+                    .uniqueResult() != null) {
                 return "Username or email already exists.";
             }
+
+            session.beginTransaction();
+            User newUser = new User();
+            newUser.setUsername(username);
+            newUser.setPassword(password); // Still plain text - consider hashing
+            newUser.setEmail(email);
+            session.persist(newUser);
+            session.getTransaction().commit();
+            return "SUCCESS";
+        } catch (Exception e) {
             e.printStackTrace();
             return "Registration failed.";
         }
