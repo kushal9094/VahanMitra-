@@ -63,6 +63,9 @@
       <a class="nav-link" href="manageUsers.jsp">Manage Users</a>
     </li>
     <li class="nav-item">
+      <a class="nav-link" href="manageVehicles.jsp">Manage Vehicles</a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" href="viewReports.jsp">View Reviews</a>
     </li>
     <li class="nav-item">
