@@ -3,6 +3,7 @@ package com.automobile.dao;
 import com.automobile.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
@@ -27,6 +28,7 @@ public class UserDAO {
 
     public static String registerUser(String username, String password, String email) {
         try (Session session = sessionFactory.openSession()) {
+            
             // Check if user exists
             if (session.createQuery("FROM User WHERE username = :un OR email = :em", User.class)
                     .setParameter("un", username)
@@ -46,6 +48,41 @@ public class UserDAO {
         } catch (Exception e) {
             e.printStackTrace();
             return "Registration failed.";
+        }
+    }
+
+    public static String updatePassword(String email, String newPassword) {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+    
+            // Find user by email
+            User user = session.createQuery("FROM User WHERE email = :email", User.class)
+                              .setParameter("email", email)
+                              .uniqueResult();
+    
+            if (user == null) {
+                return "No user found with this email address";
+            }
+    
+            // Update password
+            user.setPassword(newPassword);
+            session.update(user);
+            transaction.commit();
+            
+            return "SUCCESS";
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return "Password reset failed: " + e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 }
