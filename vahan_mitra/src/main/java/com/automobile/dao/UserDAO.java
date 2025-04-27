@@ -1,12 +1,15 @@
 package com.automobile.dao;
 
+import com.automobile.model.User;
 import java.sql.*;
+import java.util.*;
 
 public class UserDAO {
     private static final String URL = "jdbc:postgresql://localhost:5432/automobile_ratings";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "dvgs";
+    private static final String PASSWORD = "prasanna";
 
+    // Method to check if the user exists
     public static boolean checkUser(String usernameOrEmail, String password) {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
             String query = "SELECT password FROM users WHERE username = ? OR email = ?";
@@ -25,6 +28,7 @@ public class UserDAO {
         return false;
     }
 
+    // Method to register a new user
     public static String registerUser(String username, String password, String email) {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
             String query = "INSERT INTO users (username, password, email) VALUES (?, ?, ?)";
@@ -41,6 +45,44 @@ public class UserDAO {
             }
             e.printStackTrace();
             return "Registration failed.";
+        }
+    }
+
+    // Method to fetch all users from the database
+    public static List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+        String query = "SELECT * FROM users"; // Query to get all users
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setUsername(rs.getString("username"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    // Method to delete a user by ID
+    public boolean deleteUser(int userId) {
+        String query = "DELETE FROM users WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, userId);
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

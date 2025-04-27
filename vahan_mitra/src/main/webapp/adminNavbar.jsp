@@ -55,18 +55,23 @@
     transform: scale(0.98);
   }
 </style>
-
 <nav class="navbar">
   <div class="navbar-brand">Admin Dashboard</div>
   <ul class="nav">
-    <li class="nav-item">
-      <a class="nav-link" href="manageUsers.jsp">Manage Users</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="viewReports.jsp">View Reviews</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="adminLogout">Logout</a>
-    </li>
-  </ul>
-</nav>
+  <li class="nav-item">
+  <a class="nav-link" href="manageUsers.jsp">Manage Users</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="viewAllCars.jsp">View All Cars</a>
+  </li>
+  <li class="nav-item">
+  <a class="nav-link" href="viewReports.jsp">View Reviews</a>
+  </li>
+  <li class="nav-item">
+  <a class="nav-link" href="addCar.jsp">Add Cars</a>
+  </li>
+  <li class="nav-item">
+   <a class="nav-link" href="adminLogout">Logout</a>
+  </li>
+    </ul>
+  </nav>
