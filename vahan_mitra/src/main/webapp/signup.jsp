@@ -23,7 +23,7 @@
         
         <input type="submit" value="Sign Up" 
                style="background: #566573; color: white; padding: 10px; border: none; cursor: pointer; font-weight: 500; width: 100px;">
-
+        
         <!-- Success and Error Messages -->
         <%
             String message = (String) request.getAttribute("message");
@@ -53,5 +53,6 @@
       <img src="https://w0.peakpx.com/wallpaper/114/548/HD-wallpaper-porsche-panamera-car-dark.jpg" style="width: 100%; height: 100%; object-fit: cover;">
     </div>
   </section>
+  
 </body>
 </html>

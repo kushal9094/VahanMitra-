@@ -65,4 +65,12 @@
         <url-pattern>/deleteUser</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <servlet-class>com.automobile.servlet.ResetPasswordServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <url-pattern>/resetPassword</url-pattern>
+    </servlet-mapping>
 </web-app>

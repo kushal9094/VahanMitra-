@@ -139,8 +139,12 @@
           Don't have an account? 
           <a href="signup.jsp<%= redirect != null ? "?redirect=" + java.net.URLEncoder.encode(redirect, "UTF-8") : "" %>">Sign Up.</a>
         </p>
+        <p class="signup-link">
+          <a href="resetPassword.jsp" style="color: #2c3e50; font-weight: 600; text-decoration: none;">Forgot Password?</a>
+        </p>
       </form>
     </div>
   </section>
+  
 </body>
 </html>

@@ -10,4 +10,5 @@ com\automobile\dao\CarDAO.class
 com\automobile\servlet\AddCarServlet.class
 com\automobile\dao\UserDAO.class
 com\automobile\servlet\LoginServlet.class
+com\automobile\servlet\ResetPasswordServlet.class
 com\automobile\model\Car.class
