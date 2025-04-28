@@ -6,7 +6,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
-import java.util.*;
 
 public class UserDAO {
     private static final SessionFactory sessionFactory = new Configuration()
@@ -14,7 +13,6 @@ public class UserDAO {
             .addAnnotatedClass(User.class)
             .buildSessionFactory();
 
-    // Method to check if a user exists based on username or email and match the password
     public static boolean checkUser(String usernameOrEmail, String password) {
         try (Session session = sessionFactory.openSession()) {
             String hql = "FROM User WHERE username = :identifier OR email = :identifier";
@@ -28,7 +26,6 @@ public class UserDAO {
         }
     }
 
-    // Method to register a new user
     public static String registerUser(String username, String password, String email) {
         try (Session session = sessionFactory.openSession()) {
             
@@ -54,7 +51,6 @@ public class UserDAO {
         }
     }
 
-    // Method to update the user's password
     public static String updatePassword(String email, String newPassword) {
         Session session = null;
         Transaction transaction = null;
@@ -87,37 +83,6 @@ public class UserDAO {
             if (session != null) {
                 session.close();
             }
-        }
-    }
-
-    // Method to fetch all users from the database using Hibernate
-    public static List<User> getAllUsers() {
-        List<User> users = new ArrayList<>();
-        String hql = "FROM User";  // Query to get all users
-
-        try (Session session = sessionFactory.openSession()) {
-            Query<User> query = session.createQuery(hql, User.class);
-            users = query.getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return users;
-    }
-
-    // Method to delete a user by ID using Hibernate
-    public boolean deleteUser(int userId) {
-        String hql = "DELETE FROM User WHERE id = :userId";
-
-        try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.beginTransaction();
-            Query query = session.createQuery(hql);
-            query.setParameter("userId", userId);
-            int rowsAffected = query.executeUpdate();
-            transaction.commit();
-            return rowsAffected > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
         }
     }
 }
