@@ -40,7 +40,7 @@ public class UserDAO {
             session.beginTransaction();
             User newUser = new User();
             newUser.setUsername(username);
-            newUser.setPassword(password); // Still plain text - consider hashing
+            newUser.setPassword(password); 
             newUser.setEmail(email);
             session.persist(newUser);
             session.getTransaction().commit();
@@ -58,7 +58,6 @@ public class UserDAO {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();
     
-            // Find user by email
             User user = session.createQuery("FROM User WHERE email = :email", User.class)
                               .setParameter("email", email)
                               .uniqueResult();
