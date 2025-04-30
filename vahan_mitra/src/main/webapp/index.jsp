@@ -125,14 +125,14 @@
     <h2>How It Works</h2>
     <div class="steps-container">
         <div class="step">
-            <ion-icon name="create-outline" class="icon"></ion-icon>
-            <h3>Browse Vehicles</h3>
-            <p>Explore a wide range of cars with detailed information, ratings, and user reviews.</p>
-        </div>
-        <div class="step">
             <ion-icon name="people-outline" class="icon"></ion-icon>
             <h3>Sign Up & Log In</h3>
-            <p>Create an account to unlock personalized features like review submissions and suggestions.</p>
+            <p>Create an account to access the platform and browse vehicles.</p>
+        </div>
+        <div class="step">
+            <ion-icon name="create-outline" class="icon"></ion-icon>
+            <h3>Browse Vehicles</h3>
+            <p>After logging in, explore a wide range of cars with detailed information, ratings, and user reviews.</p>
         </div>
         <div class="step">
             <ion-icon name="book-outline" class="icon"></ion-icon>
